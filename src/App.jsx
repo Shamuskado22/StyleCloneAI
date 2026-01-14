@@ -76,6 +76,15 @@ const App = () => {
     setResultImage(null);
   };
 
+  const downloadImage = () => {
+    if (resultImage) {
+      const link = document.createElement("a");
+      link.href = resultImage;
+      link.download = `StyleClone-${Date.now()}.png`;
+      link.click();
+    }
+  };
+
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
@@ -305,7 +314,10 @@ const App = () => {
 
                   {/* Hover Overlay Actions */}
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                    <button className="p-3 bg-white text-slate-900 rounded-full hover:scale-110 transition-transform">
+                    <button
+                      onClick={downloadImage}
+                      className="p-3 bg-white text-slate-900 rounded-full hover:scale-110 transition-transform"
+                    >
                       <Download className="w-6 h-6" />
                     </button>
                   </div>
@@ -316,7 +328,10 @@ const App = () => {
             {/* Post-Generation Suite */}
             {resultImage && !isGenerating && (
               <div className="mt-8 flex gap-4">
-                <button className="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                <button
+                  onClick={downloadImage}
+                  className="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                >
                   <Download className="w-5 h-5" />
                   Download PNG
                 </button>
@@ -369,19 +384,6 @@ const App = () => {
           </div>
         </div>
       </main>
-
-      {/* Global CSS for custom animations */}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        @keyframes loading {
-          0% { transform: translateX(-100%); }
-          50% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
-        }
-      `,
-        }}
-      />
     </div>
   );
 };
